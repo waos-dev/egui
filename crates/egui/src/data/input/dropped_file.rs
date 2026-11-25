@@ -1,6 +1,7 @@
 use std::{path::Path, sync::Arc};
 
-#[cfg(target_arch = "wasm32")]
+// WaOS: a WASI component is not a browser. Its files have paths and are read at once.
+#[cfg(all(target_arch = "wasm32", not(target_os = "wasi")))]
 use core::{future::Future, pin::Pin};
 
 /// A file dropped into egui.
@@ -21,7 +22,7 @@ pub trait DroppedFile: core::fmt::Debug {
     /// # Errors
     ///
     /// Returns an error if the browser cannot read the file.
-    #[cfg(target_arch = "wasm32")]
+    #[cfg(all(target_arch = "wasm32", not(target_os = "wasi")))]
     fn bytes_async(&self) -> Pin<Box<dyn Future<Output = Result<Vec<u8>, String>> + '_>>;
 
     /// Read the file contents.
@@ -29,11 +30,11 @@ pub trait DroppedFile: core::fmt::Debug {
     /// # Errors
     ///
     /// Returns an error if the file cannot be read.
-    #[cfg(not(target_arch = "wasm32"))]
+    #[cfg(not(all(target_arch = "wasm32", not(target_os = "wasi"))))]
     fn bytes(&self) -> Result<Vec<u8>, String>;
 
     /// The browser file handle, if this file was dropped on the web.
-    #[cfg(target_arch = "wasm32")]
+    #[cfg(all(target_arch = "wasm32", not(target_os = "wasi")))]
     fn web_file(&self) -> Option<&web_sys::File> {
         None
     }

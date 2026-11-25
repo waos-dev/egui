@@ -100,7 +100,8 @@ pub struct InputOptions {
 impl Default for InputOptions {
     fn default() -> Self {
         // TODO(emilk): figure out why these constants need to be different on web and on native (winit).
-        let is_web = cfg!(target_arch = "wasm32");
+        // WaOS: a WASI component is not a browser.
+        let is_web = cfg!(all(target_arch = "wasm32", not(target_os = "wasi")));
         let line_scroll_speed = if is_web {
             8.0
         } else {

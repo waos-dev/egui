@@ -93,7 +93,7 @@ ron = { workspace = true, optional = true }
 serde = { workspace = true, optional = true, features = ["derive", "rc"] }
 
 
-# web:
-[target.'cfg(target_arch = "wasm32")'.dependencies]
+# web, which a WASI component is not (WaOS):
+[target.'cfg(all(target_arch = "wasm32", not(target_os = "wasi")))'.dependencies]
 # For `DroppedFile`, which hands web apps a file handle instead of its contents.
 web-sys = { workspace = true, features = ["File"] }

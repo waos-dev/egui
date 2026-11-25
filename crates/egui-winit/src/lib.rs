@@ -23,6 +23,8 @@ pub use winit;
 pub mod clipboard;
 mod dropped_file;
 mod safe_area;
+#[cfg(target_os = "wasi")]
+mod waos;
 mod window_settings;
 
 pub use window_settings::WindowSettings;
@@ -190,7 +192,16 @@ impl State {
         if let Some(max_texture_side) = max_texture_side {
             slf.set_max_texture_side(max_texture_side);
         }
+        #[cfg(target_os = "wasi")]
+        slf.egui_ctx.set_os(waos::operating_system());
         slf
+    }
+
+    /// Whether the Command key is the system's shortcut key, as on a Mac, and not Control.
+    fn command_is_super(&self) -> bool {
+        // WaOS: one build runs on every system, so the context's system, set from WaOS's
+        // answer, decides.
+        cfg!(target_os = "macos") || (cfg!(target_os = "wasi") && self.egui_ctx.os().is_mac())
     }
 
     #[cfg(feature = "accesskit")]
@@ -492,12 +503,9 @@ impl State {
                 self.modifiers.alt = alt;
                 self.modifiers.ctrl = ctrl;
                 self.modifiers.shift = shift;
-                self.modifiers.mac_cmd = cfg!(target_os = "macos") && super_;
-                self.modifiers.command = if cfg!(target_os = "macos") {
-                    super_
-                } else {
-                    ctrl
-                };
+                let command_is_super = self.command_is_super();
+                self.modifiers.mac_cmd = command_is_super && super_;
+                self.modifiers.command = if command_is_super { super_ } else { ctrl };
 
                 self.egui_input
                     .events

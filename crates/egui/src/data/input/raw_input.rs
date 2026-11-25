@@ -67,11 +67,11 @@ pub struct RawInput {
     ///
     /// egui never reads the file contents.
     #[cfg_attr(
-        not(target_arch = "wasm32"),
+        not(all(target_arch = "wasm32", not(target_os = "wasi"))),
         doc = "Call [`crate::DroppedFile::bytes`] to read a dropped file."
     )]
     #[cfg_attr(
-        target_arch = "wasm32",
+        all(target_arch = "wasm32", not(target_os = "wasi")),
         doc = "Call [`crate::DroppedFile::bytes_async`] to read a dropped file."
     )]
     ///
