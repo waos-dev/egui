@@ -18,7 +18,7 @@ egui-wgpu = { git = "https://github.com/waos-dev/egui", branch = "waos" }
 egui_extras = { git = "https://github.com/waos-dev/egui", branch = "waos" }
 ```
 
-`egui-winit` goes with WaOS's winit (`waos-dev/winit`), and its `clipboard` feature with WaOS's arboard (`waos-dev/arboard`). The fork asks for the published `wasdk` (0.7.1); an app that takes `wasdk` from WaOS's repository names it in the same `[patch.crates-io]`.
+`egui-winit` goes with WaOS's winit (`waos-dev/winit`), and its `clipboard` feature with WaOS's arboard (`waos-dev/arboard`). `egui-winit` reads what the system's bars and the keyboard cover of the app's view, as it does on iOS, so egui keeps its content clear of them on a phone; that needs `wasdk` from WaOS's `main` until the next release, which an app names in the same `[patch.crates-io]`.
 
 ## What changes on WaOS
 

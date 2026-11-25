@@ -331,6 +331,19 @@ impl State {
             _ => {}
         }
 
+        // WaOS: the bars and the keyboard come and go without a resize, so what they cover is
+        // read again before each frame.
+        #[cfg(target_os = "wasi")]
+        if matches!(
+            event,
+            WindowEvent::RedrawRequested
+                | WindowEvent::Resized(_)
+                | WindowEvent::ScaleFactorChanged { .. }
+        ) && let Some(insets) = waos::safe_area_insets(window)
+        {
+            self.egui_input_mut().safe_area_insets = Some(insets);
+        }
+
         match event {
             WindowEvent::ScaleFactorChanged { scale_factor, .. } => {
                 let native_pixels_per_point = *scale_factor as f32;

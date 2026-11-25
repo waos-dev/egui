@@ -5219,10 +5219,10 @@ dependencies = [
 [[package]]
 name = "wasdk"
 version = "0.7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43b23ef698f0454ccec10b8aa5d92b6163610c69d84df6817be82a0dfa66b9bd"
+source = "git+https://github.com/waos-dev/waos?branch=main#b9690562b073381fae07be2934fcea324482ca12"
 dependencies = [
  "inventory",
+ "raw-window-handle",
  "wasdk-macros",
  "wit-bindgen 0.63.0",
 ]
@@ -5230,8 +5230,7 @@ dependencies = [
 [[package]]
 name = "wasdk-macros"
 version = "0.7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d352144d5c1d8837254d1ccea5e0a7f6fccd7c8157229ab3dacc5d823a64c50"
+source = "git+https://github.com/waos-dev/waos?branch=main#b9690562b073381fae07be2934fcea324482ca12"
 dependencies = [
  "proc-macro2",
  "quote",
