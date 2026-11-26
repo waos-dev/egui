@@ -109,4 +109,4 @@ arboard = { workspace = true, optional = true, features = ["image-data"] }
 # WaOS: which system the app runs on, and what the system's bars and the keyboard cover of the
 # app's view, are asked of WaOS (`waos`).
 [target.'cfg(target_os = "wasi")'.dependencies]
-wasdk = { version = "0.7.1", features = ["raw-window-handle"] }
+wasdk = { version = "0.8.0", features = ["raw-window-handle"] }

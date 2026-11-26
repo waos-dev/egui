@@ -1,9 +1,2 @@
 [alias]
 xtask = "run --quiet --package xtask --"
-
-# WaOS: until the next wasdk is published, this fork builds on its own against wasdk from WaOS's
-# main branch, which has a view's window handle (egui-winit reads what the bars cover through it).
-# An app taking the fork names the same in its own `[patch.crates-io]` (WAOS.md); this file is
-# not read for it.
-[patch.crates-io]
-wasdk = { git = "https://github.com/waos-dev/waos", branch = "main" }
